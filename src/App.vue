@@ -1,32 +1,35 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+    <v-app>
+        <router-view />
+
+        <v-footer color="var(--color-secondary)" padless>
+            <v-card-text class="pb-0 pt-12 text-caption text-center skyline">
+                <br />
+                {{ new Date().getFullYear() }}
+            </v-card-text>
+        </v-footer>
+    </v-app>
 </template>
 
+<script>
+export default {
+    name: "App",
+    mounted() {
+        this.$store.dispatch("loadLinksFromFirebase")
+    },
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+:root {
+    --color-primary: #673ab7;
+    --color-secondary: #f8bbd0;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.skyline {
+    color: var(--color-secondary);
+    background: url(./assets/skyline.png);
+    background-size: contain;
+    background-position: center bottom;
 }
 </style>
