@@ -30,7 +30,7 @@
             <v-text-field
                 label="Texto"
                 outlined
-                maxlength="40"
+                maxlength="35"
                 v-model="editing.link.text"
             ></v-text-field>
             <v-text-field

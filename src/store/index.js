@@ -7,18 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    links: {
-
-      // 0: {
-      //   url:
-      //     "http://wa.me/+5527981823734?text=Olá+Bárbara,+gostaria+de+fazer+um+pedido",
-      //   text: "Faça seu pedido pelo WhatsApp",
-      // },
-      // 1: {
-      //   url: "https://www.marykay.com.br/barbaraff",
-      //   text: "Visite o meu site MK!",
-      // },
-    }
+    links: {}
 
   },
   getters: {
