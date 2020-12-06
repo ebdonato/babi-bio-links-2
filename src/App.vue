@@ -16,6 +16,7 @@ export default {
     name: "App",
     mounted() {
         this.$store.dispatch("loadLinksFromFirebase")
+        this.$store.dispatch("loadSettingFromFirebase")
     },
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <v-main class="pa-3 bg-admin">
+    <v-main class="pa-3 bg-image">
         <div class="text-h3 text-center">Admin</div>
         <v-card
             v-if="!editing.mode"
@@ -11,9 +11,8 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn
-                    color="var(--color-primary)"
+                    color="var(--color-secondary)"
                     class="mx-auto"
-                    text
                     @click="enterAddMode"
                 >
                     Adicionar Link </v-btn
@@ -99,12 +98,36 @@
                 </v-card-actions>
             </v-card>
         </template>
+        <v-divider inset></v-divider>
+        <v-card
+            class="mx-auto my-6"
+            max-width="344"
+            color="transparent"
+            elevation="0"
+        >
+            <v-card-actions>
+                <v-combobox
+                    v-model="floatingObjects"
+                    :items="floatingObjectNames"
+                    label="Objetos Flutuantes"
+                    multiple
+                >
+                </v-combobox>
+            </v-card-actions>
+        </v-card>
     </v-main>
 </template>
 
 <script>
+import LetSnow from "../components/LetSnow.vue"
+
+import floatingObjectsDefaults from "@/assets/floatingObjectsDefaults"
+
 export default {
     name: "Admin",
+    components: {
+        LetSnow,
+    },
     data() {
         return {
             dialog: false,
@@ -113,6 +136,8 @@ export default {
                 ID: null,
                 link: {},
             },
+
+            floatingObjectsDefaults,
         }
     },
     methods: {
@@ -150,6 +175,20 @@ export default {
         links() {
             return this.$store.getters.getLinks
         },
+        floatingObjectNames() {
+            return floatingObjectsDefaults.map((obj) => obj.name)
+        },
+        floatingObjects: {
+            get() {
+                return this.$store.getters.getFloatingObjects
+            },
+            set(value) {
+                this.$store.dispatch("setFloatingObjects", value)
+            },
+        },
+    },
+    mounted() {
+        this.floatingObjectsOptions = this.$store.getters.getfloatingObjectsNames
     },
 }
 </script>

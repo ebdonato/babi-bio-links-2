@@ -3,25 +3,34 @@ import Vuex from 'vuex'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
+import floatingObjectsDefaults from "@/assets/floatingObjectsDefaults"
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    links: {}
+    links: {},
+    floatingObjects: []
 
   },
   getters: {
-    getLinks: state => state.links
+    getLinks: state => state.links,
+
+    getFloatingObjects: state => state.floatingObjects,
+
+    getFloatingFiles: state => floatingObjectsDefaults.filter(obj => state.floatingObjects.includes(obj.name)).map(obj => process.env.BASE_URL + obj.file)
   },
   mutations: {
     updateLinks: (state, payload) => {
       state.links = { ...payload }
       firebase.firestore().collection('main').doc('links').set(state.links)
     },
+
     updateLink: (state, payload) => {
       state.links[payload.id] = payload.link
       firebase.firestore().collection('main').doc('links').set(state.links)
     },
+
     deleteLink: (state, payload) => {
       firebase.firestore().collection('main').doc('links').update({ [payload]: firebase.firestore.FieldValue.delete() })
 
@@ -35,7 +44,10 @@ export default new Vuex.Store({
       })
 
       state.links = newLinks
+    },
 
+    updateFloatingObjects: (state, payload) => {
+      state.floatingObjects = payload
     }
 
   },
@@ -45,12 +57,15 @@ export default new Vuex.Store({
         commit('deleteLink', payload)
       }
     },
+
     setLink: ({ commit }, payload) => {
       commit('updateLink', payload)
     },
+
     setLinks: ({ commit }, payload) => {
       commit('updateLinks', payload)
     },
+
     loadLinksFromFirebase: ({ commit }) => {
       firebase.firestore().collection('main').doc('links').get()
         .then(doc => {
@@ -59,9 +74,27 @@ export default new Vuex.Store({
           }
         })
         .catch(console.error)
+    },
+
+    loadSettingFromFirebase: ({ commit }) => {
+      firebase.firestore().collection('main').doc('settings').get()
+        .then(doc => {
+          if (doc.exists) {
+            commit('updateFloatingObjects', doc.data().floatingObjects)
+          }
+        })
+        .catch(console.error)
+    },
+
+    setFloatingObjects: ({ commit }, payload) => {
+      commit('updateFloatingObjects', payload)
+      firebase.firestore().collection('main').doc('settings').set({
+        floatingObjects: payload
+      })
     }
 
   },
+
   modules: {
   }
 })

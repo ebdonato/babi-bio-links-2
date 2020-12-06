@@ -1,6 +1,7 @@
 <template>
     <v-main class="pa-0 bg-image">
-        <let-it-snow v-bind="snowConf" :show="show"></let-it-snow>
+        <LetSnow></LetSnow>
+
         <v-img
             max-height="150"
             max-width="150"
@@ -37,33 +38,17 @@
 </template>
 
 <script>
+import LetSnow from "../components/LetSnow.vue"
+
 export default {
     name: "Home",
-    data() {
-        return {
-            snowConf: {
-                windPower: 1,
-                speed: 0,
-                interaction: false,
-                count: 12,
-                size: 10,
-                opacity: 1,
-                images: [
-                    "https://raw.githubusercontent.com/bob-chen/let_it_snow/master/demo/snow.png",
-                    //"https://raw.githubusercontent.com/bob-chen/let_it_snow/master/demo/sock.png",
-                    //"https://raw.githubusercontent.com/bob-chen/let_it_snow/master/demo/tree.png",
-                ],
-            },
-            show: false,
-        }
+    components: {
+        LetSnow,
     },
     computed: {
         links() {
             return this.$store.getters.getLinks
         },
-    },
-    mounted() {
-        this.show = true
     },
 }
 </script>
