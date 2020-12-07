@@ -5,6 +5,9 @@
 
             <v-spacer></v-spacer>
 
+            <v-btn icon to="/">
+                <v-icon>mdi-home</v-icon>
+            </v-btn>
             <v-btn icon @click="logout">
                 <v-icon>mdi-logout</v-icon>
             </v-btn>

@@ -34,10 +34,24 @@
                 {{ link.text }}
             </v-btn>
         </div>
+        <v-btn
+            color="var(--color-primary)"
+            dark
+            fab
+            absolute
+            bottom
+            right
+            v-if="logged"
+            to="/admin"
+        >
+            <v-icon> mdi-cog </v-icon>
+        </v-btn>
     </v-main>
 </template>
 
 <script>
+import firebase from "firebase/app"
+import "firebase/auth"
 import LetSnow from "../components/LetSnow.vue"
 
 export default {
@@ -48,6 +62,13 @@ export default {
     computed: {
         links() {
             return this.$store.getters.getLinks
+        },
+        logged() {
+            if (firebase.auth().currentUser) {
+                return true
+            } else {
+                return false
+            }
         },
     },
 }

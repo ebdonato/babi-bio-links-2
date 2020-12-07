@@ -19,7 +19,12 @@
                         <v-text-field
                             v-model="password"
                             :rules="passwordRules"
+                            :append-icon="
+                                showPassword ? 'mdi-eye' : 'mdi-eye-off'
+                            "
+                            :type="showPassword ? 'text' : 'password'"
                             label="Senha"
+                            @click:append="showPassword = !showPassword"
                             required
                         ></v-text-field>
                     </v-container>
@@ -55,8 +60,9 @@ export default {
                 (v) =>
                     v.length >= 6 || "A senha deve ter pelo menos 6 caracteres",
             ],
-            email: "user@test.com",
-            password: "123456",
+            email: "",
+            password: "",
+            showPassword: false,
         }
     },
     methods: {
