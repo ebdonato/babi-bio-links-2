@@ -34,7 +34,7 @@ export default {
     },
     computed: {
         logged() {
-            return firebase.auth().currentUser !== null
+            return this.$store.state.logged
         },
     },
 }

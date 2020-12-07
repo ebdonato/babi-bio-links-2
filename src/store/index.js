@@ -10,7 +10,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     links: {},
-    floatingObjects: []
+    floatingObjects: [],
+    logged: false
 
   },
   getters: {
@@ -48,6 +49,10 @@ export default new Vuex.Store({
 
     updateFloatingObjects: (state, payload) => {
       state.floatingObjects = payload
+    },
+
+    setLoggedIn: (state, payload) => {
+      state.logged = payload
     }
 
   },
@@ -90,6 +95,12 @@ export default new Vuex.Store({
       commit('updateFloatingObjects', payload)
       firebase.firestore().collection('main').doc('settings').set({
         floatingObjects: payload
+      })
+    },
+
+    handleAuthStateChanged: ({ commit }) => {
+      firebase.auth().onAuthStateChanged(user => {
+        commit('setLoggedIn', user !== null)
       })
     }
 

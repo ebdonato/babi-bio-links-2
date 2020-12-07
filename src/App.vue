@@ -17,6 +17,7 @@ export default {
     mounted() {
         this.$store.dispatch("loadLinksFromFirebase")
         this.$store.dispatch("loadSettingFromFirebase")
+        this.$store.dispatch("handleAuthStateChanged")
     },
 }
 </script>

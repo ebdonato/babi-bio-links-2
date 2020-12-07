@@ -71,11 +71,7 @@ export default {
             return this.$store.getters.getLinks
         },
         logged() {
-            if (firebase.auth().currentUser) {
-                return true
-            } else {
-                return false
-            }
+            return this.$store.state.logged
         },
     },
 }
