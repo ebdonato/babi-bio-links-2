@@ -35,8 +35,7 @@
             </v-btn>
         </div>
         <v-btn
-            color="var(--color-primary)"
-            dark
+            color="primary"
             fab
             absolute
             bottom
@@ -76,21 +75,21 @@ export default {
 
 <style>
 .bg-image {
-    background: var(--color-primary);
+    background: var(--v-primary-base);
     background-image: linear-gradient(
         135deg,
-        var(--color-primary) 0%,
-        var(--color-secondary) 100%
+        var(--v-primary-base) 0%,
+        var(--v-secondary-base) 100%
     );
     background-image: -webkit-linear-gradient(
         to right,
-        var(--color-primary),
-        var(--color-secondary)
+        var(--v-primary-base),
+        var(--v-secondary-base)
     );
     background-image: linear-gradient(
         to bottom,
-        var(--color-primary),
-        var(--color-secondary)
+        var(--v-primary-base),
+        var(--v-secondary-base)
     );
 }
 </style>

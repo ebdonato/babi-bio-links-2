@@ -1,7 +1,8 @@
 <template>
-    <v-main class="pa-3 bg-image">
+    <v-main class="bg-image">
+        <Topbar></Topbar>
         <v-form v-model="valid" @submit.prevent="login">
-            <v-card class="mx-auto" max-width="344">
+            <v-card class="mx-auto my-6" max-width="344" color="secondary">
                 <v-card-text>
                     <p class="display-1 text--primary">Entrar</p>
                 </v-card-text>
@@ -46,8 +47,11 @@
 import firebase from "firebase/app"
 import "firebase/auth"
 
+import Topbar from "../components/Topbar.vue"
+
 export default {
     name: "Login",
+    components: { Topbar },
     data() {
         return {
             valid: false,

@@ -1,17 +1,7 @@
 <template>
-    <v-main class="bg-admin">
-        <v-toolbar dense>
-            <v-toolbar-title>Administração</v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-btn icon to="/">
-                <v-icon>mdi-home</v-icon>
-            </v-btn>
-            <v-btn icon @click="logout">
-                <v-icon>mdi-logout</v-icon>
-            </v-btn>
-        </v-toolbar>
+    <v-main class="bg-image">
+        <Topbar></Topbar>
+        <!-- <LetSnow></LetSnow> -->
         <v-card
             v-if="!editing.mode"
             color="transparent"
@@ -21,38 +11,38 @@
         >
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                    color="var(--color-secondary)"
-                    class="mx-auto"
-                    @click="enterAddMode"
-                >
+                <v-btn color="primary" class="mx-auto" @click="enterAddMode">
                     Adicionar Link </v-btn
                 ><v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
         <v-card
             v-if="editing.mode"
-            color="transparent"
-            outlined
+            color="secondary"
             class="mx-auto my-6"
             max-width="344"
         >
-            <v-text-field
-                label="Texto"
-                outlined
-                maxlength="35"
-                v-model="editing.link.text"
-            ></v-text-field>
-            <v-text-field
-                label="URL"
-                outlined
-                v-model="editing.link.url"
-            ></v-text-field>
+            <v-card-title>Adicionar Link</v-card-title>
 
+            <v-card-text>
+                <v-text-field
+                    label="Texto"
+                    outlined
+                    maxlength="35"
+                    v-model="editing.link.text"
+                ></v-text-field>
+                <v-text-field
+                    label="URL"
+                    outlined
+                    v-model="editing.link.url"
+                ></v-text-field>
+            </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="editing.mode = false"> Cancelar </v-btn>
-                <v-btn @click="confirmEditing"> Ok </v-btn>
+                <v-btn color="primary" @click="editing.mode = false">
+                    Cancelar
+                </v-btn>
+                <v-btn color="primary" @click="confirmEditing"> Ok </v-btn>
             </v-card-actions>
         </v-card>
 
@@ -60,8 +50,7 @@
             <v-card
                 v-for="(link, index) in links"
                 :key="index"
-                elevation="2"
-                shaped
+                color="secondary"
                 class="mx-auto my-6"
                 max-width="344"
             >
@@ -75,6 +64,7 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn
                                 icon
+                                color="primary"
                                 @click="dialog = true"
                                 v-bind="attrs"
                                 v-on="on"
@@ -103,19 +93,14 @@
                     </v-dialog>
 
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="enterEditMode(index)">
+                    <v-btn icon color="primary" @click="enterEditMode(index)">
                         <v-icon left> mdi-pencil </v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </template>
         <v-divider inset></v-divider>
-        <v-card
-            class="mx-auto my-6"
-            max-width="344"
-            color="transparent"
-            elevation="0"
-        >
+        <v-card class="mx-auto my-6" max-width="344" color="secondary">
             <v-card-actions>
                 <v-combobox
                     v-model="floatingObjects"
@@ -131,6 +116,7 @@
 
 <script>
 import LetSnow from "../components/LetSnow.vue"
+import Topbar from "../components/Topbar.vue"
 import floatingObjectsDefaults from "@/assets/floatingObjectsDefaults"
 import firebase from "firebase/app"
 import "firebase/auth"
@@ -139,6 +125,7 @@ export default {
     name: "Admin",
     components: {
         LetSnow,
+        Topbar,
     },
     data() {
         return {
@@ -182,14 +169,6 @@ export default {
                 link: this.editing.link,
             })
         },
-        logout() {
-            firebase
-                .auth()
-                .signOut()
-                .then(() => {
-                    this.$router.replace("/")
-                })
-        },
     },
     computed: {
         links() {
@@ -215,6 +194,6 @@ export default {
 
 <style>
 .bg-admin {
-    background: var(--color-secondary);
+    background: var(--v-secondary-base);
 }
 </style>

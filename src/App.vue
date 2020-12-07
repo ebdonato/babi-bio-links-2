@@ -25,6 +25,7 @@ export default {
 :root {
     --color-primary: #673ab7;
     --color-secondary: #f8bbd0;
+    --color-accent: #681270;
 }
 
 .skyline {
