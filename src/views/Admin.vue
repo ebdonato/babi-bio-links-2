@@ -60,46 +60,23 @@
                 <v-card-text> {{ link.url }} </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
-                    <v-dialog v-model="dialog" persistent max-width="290">
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn
-                                icon
-                                color="primary"
-                                @click="dialog = true"
-                                v-bind="attrs"
-                                v-on="on"
-                            >
-                                <v-icon left> mdi-delete </v-icon>
-                            </v-btn>
-                        </template>
-                        <v-card>
-                            <v-card-title class="headline">
-                                Excluir link?
-                            </v-card-title>
-                            <v-card-text>{{ link.text }} </v-card-text>
-                            <v-card-text
-                                >Essa ação não poderá ser desfeita.
-                            </v-card-text>
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn text @click="deleteLink(index)">
-                                    OK
-                                </v-btn>
-                                <v-btn text @click="dialog = false">
-                                    Cancelar
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                    </v-dialog>
+                    <v-btn
+                        icon
+                        color="primary"
+                        @click.stop="openDialog(index, link.text)"
+                    >
+                        <v-icon left> mdi-delete </v-icon>
+                    </v-btn>
 
                     <v-spacer></v-spacer>
+
                     <v-btn icon color="primary" @click="enterEditMode(index)">
                         <v-icon left> mdi-pencil </v-icon>
                     </v-btn>
                 </v-card-actions>
             </v-card>
         </template>
-        <v-divider inset></v-divider>
+        <v-divider></v-divider>
         <v-card class="mx-auto my-6" max-width="344" color="secondary">
             <v-card-actions>
                 <v-combobox
@@ -111,6 +88,21 @@
                 </v-combobox>
             </v-card-actions>
         </v-card>
+
+        <v-dialog v-model="deleting.dialog" max-width="290">
+            <v-card>
+                <v-card-title class="headline"> Excluir link? </v-card-title>
+                <v-card-text>{{ deleting.text }} </v-card-text>
+                <v-card-text>Essa ação não poderá ser desfeita. </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="deleteLink(deleting.ID)"> OK </v-btn>
+                    <v-btn text @click="deleting.dialog = false">
+                        Cancelar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-main>
 </template>
 
@@ -135,7 +127,11 @@ export default {
                 ID: null,
                 link: {},
             },
-
+            deleting: {
+                dialog: false,
+                ID: null,
+                text: "",
+            },
             floatingObjectsDefaults,
         }
     },
@@ -160,6 +156,7 @@ export default {
             this.saveLinks()
         },
         deleteLink(ID) {
+            this.deleting.dialog = false
             this.dialog = false
             this.$store.dispatch("deleteLink", ID)
         },
@@ -168,6 +165,11 @@ export default {
                 id: this.editing.ID,
                 link: this.editing.link,
             })
+        },
+        openDialog(index, text) {
+            this.deleting.ID = index
+            this.deleting.text = text
+            this.deleting.dialog = true
         },
     },
     computed: {

@@ -4,7 +4,7 @@
         <v-form v-model="valid" @submit.prevent="login">
             <v-card class="mx-auto my-6" max-width="344" color="secondary">
                 <v-card-text>
-                    <p class="display-1 text--primary">Entrar</p>
+                    <p class="text-h3 text--primary">Entrar</p>
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-text>
