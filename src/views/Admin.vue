@@ -161,6 +161,10 @@ export default {
             this.$store.dispatch("deleteLink", ID)
         },
         saveLinks() {
+            if (!this.editing.link.url.startsWith("http")) {
+                this.editing.link.url = "http://" + this.editing.link.url
+            }
+
             this.$store.dispatch("setLink", {
                 id: this.editing.ID,
                 link: this.editing.link,
