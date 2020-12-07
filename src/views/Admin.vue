@@ -1,6 +1,14 @@
 <template>
-    <v-main class="pa-3 bg-image">
-        <div class="text-h3 text-center">Admin</div>
+    <v-main class="bg-admin">
+        <v-toolbar dense>
+            <v-toolbar-title>Administração</v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="logout">
+                <v-icon>mdi-logout</v-icon>
+            </v-btn>
+        </v-toolbar>
         <v-card
             v-if="!editing.mode"
             color="transparent"
@@ -120,8 +128,9 @@
 
 <script>
 import LetSnow from "../components/LetSnow.vue"
-
 import floatingObjectsDefaults from "@/assets/floatingObjectsDefaults"
+import firebase from "firebase/app"
+import "firebase/auth"
 
 export default {
     name: "Admin",
@@ -169,6 +178,14 @@ export default {
                 id: this.editing.ID,
                 link: this.editing.link,
             })
+        },
+        logout() {
+            firebase
+                .auth()
+                .signOut()
+                .then(() => {
+                    this.$router.replace("/")
+                })
         },
     },
     computed: {
